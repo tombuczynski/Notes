@@ -3,10 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:Notes.ViewModels"
              x:Class="Notes.Views.AllNotesPage"
+             NavigatedTo="ContentPage_NavigatedTo"
              Title="Notes">
     
     <ContentPage.Resources>
-        <Style TargetType="VerticalStackLayout">
+        <Style x:Key="SelStyle" TargetType="VerticalStackLayout">
             <Setter Property="VisualStateManager.VisualStateGroups">
                 <VisualStateGroupList>
                     <VisualStateGroup x:Name="CommonStates">
@@ -26,6 +27,10 @@
                 </VisualStateGroupList>
             </Setter>
         </Style>
+
+        <Style x:Key="NormalStyle" TargetType="VerticalStackLayout">
+        </Style>
+        
     </ContentPage.Resources>
 
     <ContentPage.BindingContext>
@@ -49,7 +54,7 @@
         
         <CollectionView.ItemTemplate>
             <DataTemplate>
-                <VerticalStackLayout Padding="4">
+                <VerticalStackLayout Padding="4" Style="{OnPlatform Default={StaticResource NormalStyle}, Android={StaticResource SelStyle}} ">
                     <Label Text="{Binding Text}" FontSize="18" />
                     <Label Text="{Binding Date}" FontSize="14" TextColor="{AppThemeBinding Default=DarkBlue, Dark=LightBlue}" />
                 </VerticalStackLayout>

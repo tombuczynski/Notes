@@ -36,10 +36,11 @@ namespace Notes.ViewModels
                 if (matchedViewModel != null)
                 {
                     matchedViewModel.Reload();
+                    AllNotes.Move(AllNotes.IndexOf(matchedViewModel), 0);
                 }
                 else
                 {
-                    AllNotes.Add(new NoteViewModel(Models.Note.Load(noteId)));
+                    AllNotes.Insert(0, new NoteViewModel(Models.Note.Load(noteId)));
                 }
 
             }
