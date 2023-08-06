@@ -1,19 +1,47 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:Notes.ViewModels"
              x:Class="Notes.Views.AllNotesPage"
-             Appearing="ContentPage_Appearing"
              Title="Notes">
     
+    <ContentPage.Resources>
+        <Style TargetType="VerticalStackLayout">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" >
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"/>
+                                </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="{AppThemeBinding Light=LightSkyBlue, Dark=DarkBlue}"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+
+    <ContentPage.BindingContext>
+        <viewModels:AllNotesViewModel/>
+    </ContentPage.BindingContext>
+
     <ContentPage.ToolbarItems>
-        <ToolbarItem Clicked="Add_Clicked" Text="Add" IconImageSource="{FontImage FontFamily=ionicons, Size='80', Glyph='&#xf217;', Color=White}" Order="Primary"/>
+        <ToolbarItem Command="{Binding NewNoteCmd}" Text="Add" IconImageSource="{FontImage FontFamily=ionicons, Size='80', Glyph='&#xf217;', Color=White}" Order="Primary"/>
     </ContentPage.ToolbarItems>
 
     <CollectionView x:Name="NotesCollection"
                     Margin="10"
-                    ItemsSource="{Binding Notes}"
+                    ItemsSource="{Binding AllNotes}"
                     SelectionMode="Single"
-                    SelectionChanged="NotesCollection_SelectionChanged">
+                    SelectionChangedCommand="{Binding SelectNoteCmd}"
+                    SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path=SelectedItem}">
 
         <CollectionView.ItemsLayout>
             <LinearItemsLayout Orientation="Vertical" ItemSpacing="10"/>
@@ -21,9 +49,9 @@
         
         <CollectionView.ItemTemplate>
             <DataTemplate>
-                <VerticalStackLayout>
+                <VerticalStackLayout Padding="4">
                     <Label Text="{Binding Text}" FontSize="18" />
-                    <Label Text="{Binding Date}" FontSize="14" TextColor="DarkBlue" />
+                    <Label Text="{Binding Date}" FontSize="14" TextColor="{AppThemeBinding Default=DarkBlue, Dark=LightBlue}" />
                 </VerticalStackLayout>
             </DataTemplate>
         </CollectionView.ItemTemplate>

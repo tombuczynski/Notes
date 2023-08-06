@@ -1,4 +1,4 @@
-using Notes.Models;
+using Notes.ViewModels;
 
 namespace Notes.Views;
 
@@ -8,14 +8,4 @@ public partial class AboutPage : ContentPage
 	{
 		InitializeComponent();
 	}
-
-    private async void LearnMoreButton_Clicked(object sender, EventArgs e)
-    {
-		//await Launcher.Default.OpenAsync("https://aka.ms/maui");
-
-		if (BindingContext is About about)
-		{
-			await Launcher.OpenAsync(about.MoreInfoUrl);
-		}
-    }
 }
