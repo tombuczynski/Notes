@@ -11,6 +11,7 @@
     
     <VerticalStackLayout Spacing="10" Margin="5">
         <Editor x:Name="TextEditor"
+                PlaceholderColor="{OnPlatform Android=#FF0B98}"
                 Placeholder="Enter your note"
                 Text="{Binding Text}"
                 FontSize="Body"
